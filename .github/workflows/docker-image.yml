@@ -29,8 +29,7 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           context: https://github.com/passbolt/passbolt_docker.git
-          dockerfile: debian/Dockerfile
-          tty: true
+          file: debian/Dockerfile
           push: true
           tags: |
             fbraz3/passbolt:latest
