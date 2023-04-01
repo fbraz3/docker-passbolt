@@ -2,15 +2,15 @@ name: Build Docker Image
 
 on: 
   workflow_dispatch:
-  schedule:
-    - cron: '0 6 * * 1'
+#  schedule:
+#    - cron: '0 6 * * 1'
 
 jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+#      - name: Checkout
+#        uses: actions/checkout@v3
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -28,7 +28,20 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           platforms: linux/amd64,linux/arm64
-          context: .
+          context: https://github.com/passbolt/passbolt_docker.git
+          file: debian/Dockerfile
           push: true
           tags: |
             fbraz3/passbolt:latest
+            fbraz3/passbolt:latest-ce
+
+      - name: Build and push rootless
+        uses: docker/build-push-action@v4
+        with:
+          platforms: linux/amd64,linux/arm64
+          context: https://github.com/passbolt/passbolt_docker.git
+          file: debian/Dockerfile.rootless
+          push: true
+          tags: |
+            fbraz3/passbolt:latest-non-root
+            fbraz3/passbolt:latest-ce-non-root
