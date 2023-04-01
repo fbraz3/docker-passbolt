@@ -33,3 +33,15 @@ jobs:
           push: true
           tags: |
             fbraz3/passbolt:latest
+            fbraz3/passbolt:latest-ce
+
+      - name: Build and push rootless
+        uses: docker/build-push-action@v4
+        with:
+          platforms: linux/amd64,linux/arm64
+          context: https://github.com/passbolt/passbolt_docker.git
+          file: debian/Dockerfile.rootless
+          push: true
+          tags: |
+            fbraz3/passbolt:latest-non-root
+            fbraz3/passbolt:latest-ce-non-root
